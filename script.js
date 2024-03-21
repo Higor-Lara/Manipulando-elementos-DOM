@@ -9,16 +9,19 @@ const startPauseBt = document.querySelector('#start-pause')
 const music = new Audio('/sons/luna-rise-part-one.mp3')
 music.loop = true;
 
+const playMusic = new Audio('/sons/play.wav')
+const pauseMusic = new Audio('/sons/pause.mp3')
+const stopMusic = new Audio('/sons/beep.mp3')
+
 let timeInSecond = 5
 let intervalId = null
 
 for (let counter = 0; counter < mainButtons.length; counter++) {
     mainButtons[counter].addEventListener('click', () => {
         const template = mainButtons[counter].classList[2]
-        html.setAttribute  ('data-contexto', template)
+        html.setAttribute('data-contexto', template)
         banner.setAttribute('src', `/imagens/${template}.png`)
         mainButtons.forEach((button) => {
-            console.log(button)
             button.classList.remove('active')
         })
         mainButtons[counter].classList.add('active')
@@ -48,28 +51,31 @@ musicInput.addEventListener('change', () => {
     }
 })
 
+startPauseBt.addEventListener('click', startAndPause)
+
+function zerar() {
+    if (intervalId !== null) {
+        clearInterval(intervalId);
+        intervalId = null;
+    }
+}
 const countDown = () => {
     if(timeInSecond <= 0) {
         zerar()
+        stopMusic.play()
+        timeInSecond = 5
         alert('Tempo finalizado')
         return
     }
     timeInSecond -= 1
     console.log('Temporizador: ' + timeInSecond)
 }
-
-startPauseBt.addEventListener('click', startAndPause)
-
 function startAndPause () {
     if(intervalId) {
         zerar()
+        pauseMusic.play()
         return
     }
     intervalId = setInterval(countDown, 1000)
-}
-function zerar() {
-    if (intervalId !== null) {
-        clearInterval(intervalId);
-        intervalId = null;
-    }
+    playMusic.play()
 }
