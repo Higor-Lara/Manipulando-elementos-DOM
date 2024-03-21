@@ -138,7 +138,8 @@ h1, h2, h3, h4, h5, h6 {
 .app__card-primary-button-wrapper {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0 50px 0 50px;
 }
 
 .app__card-primary-button {
@@ -227,6 +228,10 @@ h1, h2, h3, h4, h5, h6 {
     visibility: hidden;
 }
 
+#reset-time {
+    
+}
+
 /* fim - toggle */
 
 /* Para Tablets */
@@ -250,3 +255,4 @@ h1, h2, h3, h4, h5, h6 {
         font-size: 6rem;
     }
 }
+
