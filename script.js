@@ -11,25 +11,21 @@ const resetTime = document.querySelector('#reset-time')
 
 
 const music = new Audio('/sons/luna-rise-part-one.mp3')
-music.loop = true;
+music.loop = true
 
 const playMusic = new Audio('/sons/play.wav')
 const pauseMusic = new Audio('/sons/pause.mp3')
 const stopMusic = new Audio('/sons/beep.mp3')
 
-let focoTime = 1500
-let shortRestTime = 300
-let longRestTime = 900
+let timeInSecond = [1500, 300, 900]
 let verifyItem = 0
 
 let intervalId = null
 
-
-
-
 for (let counter = 0; counter < mainButtons.length; counter++) {
     mainButtons[counter].addEventListener('click', () => {
          const template = mainButtons[counter].classList[2]
+         console.log(mainButtons[counter].classList)
         html.setAttribute('data-contexto', template)
         banner.setAttribute('src', `/imagens/${template}.png`)
         mainButtons.forEach((button) => {
@@ -47,19 +43,19 @@ for (let counter = 0; counter < mainButtons.length; counter++) {
                 titleBanner.innerHTML = `Otimize sua produtividade,<br>
                 <strong class="app__title-strong">mergulhe no que importa.</strong>`
                 verifyItem = 0
-                fromatTime(focoTime)
+                fromatTime(timeInSecond[0])
                 break;
             case "descanso-curto":
                 titleBanner.innerHTML = `Que tal dar uma respirada?<br>
                 <strong class="app__title-strong">Faça uma pausa curta!</strong>`
                 verifyItem = 1
-                fromatTime(shortRestTime)
+                fromatTime(timeInSecond[1])
                 break;
             case "descanso-longo":
                 titleBanner.innerHTML = `Hora de voltar a superfície<br>
                 <strong class="app__title-strong">Faça uma pausa longa.</strong>`
                 verifyItem = 2
-                fromatTime(longRestTime)
+                fromatTime(timeInSecond[2])
                 break
         }
     })
@@ -78,15 +74,15 @@ startPauseBt.addEventListener('click', startAndPause)
 
 resetTime.addEventListener('click', () => {
     if(verifyItem == 0) {     
-        focoTime = 1500
-        fromatTime(focoTime)
+        timeInSecond[0] = 1500
+        fromatTime(timeInSecond[0])
     } else if (verifyItem == 1) {
-        shortRestTime = 300
-        fromatTime(shortRestTime)
+        timeInSecond[1] = 300
+        fromatTime(timeInSecond[1])
     }
     else if (verifyItem == 2) {
-        longRestTime = 900
-        fromatTime(longRestTime)
+        timeInSecond[2] = 900
+        fromatTime(timeInSecond[2])
     }
     zerar()     
     childStartPauseBt[3].textContent = "Começar"
@@ -101,33 +97,33 @@ function zerar() {
 }
 const countDown = () => {
     if(verifyItem == 0) {     
-        if(focoTime <= 0) {
+        if(timeInSecond[0] <= 0) {
             zerar()
             stopMusic.play()
-            focoTime = 1500
+            timeInSecond[0] = 1500
             return
         }
-        focoTime -= 1
-        fromatTime(focoTime)
+        timeInSecond[0] -= 1
+        fromatTime(timeInSecond[0])
     } else if (verifyItem == 1) {
-        if(shortRestTime <= 0) {
+        if(timeInSecond[1] <= 0) {
             zerar()
             stopMusic.play()
-            shortRestTime = 300
+            timeInSecond[1] = 300
             return
         }
-        shortRestTime -= 1
-        fromatTime(shortRestTime)
+        timeInSecond[1] -= 1
+        fromatTime(timeInSecond[1])
     }
     else if (verifyItem == 2) {
-        if(longRestTime <= 0) {
+        if(timeInSecond[2] <= 0) {
             zerar()
             stopMusic.play()
-            longRestTime = 900
+            timeInSecond[2] = 900
             return
         }
-        longRestTime -= 1
-        fromatTime(longRestTime)
+        timeInSecond[2] -= 1
+        fromatTime(timeInSecond[2])
     }
 }
 function startAndPause() {
@@ -150,4 +146,4 @@ function fromatTime(timePerItem) {
     const formatedTime = time.toLocaleTimeString('pt-Br', {minute: '2-digit', second: '2-digit'})
     timer.textContent = `${formatedTime}`
 }
-fromatTime(focoTime)
+fromatTime(timeInSecond[0])
